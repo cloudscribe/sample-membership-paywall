@@ -1,1 +1,3 @@
-# sample-membership-paywall
+# cloudscribe Membership Paywall Demo App
+
+Coming soon!
