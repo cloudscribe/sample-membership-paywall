@@ -1,4 +1,9 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using cloudscribe.EmailQueue.HangfireIntegration;
+using cloudscribe.EmailQueue.Models;
+using cloudscribe.Membership.HangfireIntegration;
+using cloudscribe.Membership.Models;
+using Hangfire;
+using Microsoft.Extensions.Configuration;
 
 namespace Microsoft.Extensions.DependencyInjection
 {
@@ -15,6 +20,11 @@ namespace Microsoft.Extensions.DependencyInjection
             services.AddCloudscribeLoggingEFStorageMSSQL(connectionString);
             
             services.AddCloudscribeSimpleContentEFStorageMSSQL(connectionString);
+
+            services.AddEmailTemplateStorageMSSQL(connectionString);
+            services.AddEmailQueueStorageMSSQL(connectionString);
+            services.AddMembershipSubscriptionStorageMSSQL(connectionString);
+            services.AddHangfire(hfConfig => hfConfig.UseSqlServerStorage(connectionString));
 
             return services;
         }
@@ -35,6 +45,17 @@ namespace Microsoft.Extensions.DependencyInjection
             services.AddSimpleContentMvc(config);
             services.AddMetaWeblogForSimpleContent(config.GetSection("MetaWeblogApiOptions"));
             services.AddSimpleContentRssSyndiction();
+
+            services.AddScoped<IRoleRemovalTask, HangfireRoleRemovalTask>();
+            services.AddScoped<ISendRemindersTask, HangfireSendRemindersTask>();
+            services.AddMembershipSubscriptionMvcComponents(config);
+
+            // for testing the message formatting and token replacement
+            //services.AddScoped<IEmailQueueItemSender, cloudscribe.EmailQueue.Services.LogOnlyMessageSender>();
+            services.AddScoped<IEmailQueueProcessor, HangFireEmailQueueProcessor>();
+            services.AddEmailQueueWithCloudscribeIntegration(config);
+
+            services.AddEmailRazorTemplating(config);
 
             return services;
         }

@@ -43,6 +43,20 @@ namespace Microsoft.Extensions.DependencyInjection
                     authBuilder.RequireRole("Administrators", "Content Administrators");
                 });
 
+            options.AddPolicy(
+                "MembershipAdminPolicy",
+                authBuilder =>
+                {
+                    authBuilder.RequireRole("Administrators");
+                });
+
+            options.AddPolicy(
+                "MembershipJoinPolicy",
+                authBuilder =>
+                {
+                    authBuilder.RequireAuthenticatedUser();
+                });
+
 
             // add other policies here 
 

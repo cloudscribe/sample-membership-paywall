@@ -55,6 +55,7 @@
     </header>
     <div id="wrapper" class="container-fluid cs-container flex-fill">
         @await Component.InvokeAsync("Navigation", new { viewName = "Bootstrap4Breadcrumbs", filterName = NamedNavigationFilters.Breadcrumbs, startingNodeKey = "" })
+        @await Component.InvokeAsync("Membership", new { user = User, viewName = "Default" })
         <div class="row">
             <main id="content" role="main" class="col order-3">
                 @await Html.PartialAsync("AlertsPartial")

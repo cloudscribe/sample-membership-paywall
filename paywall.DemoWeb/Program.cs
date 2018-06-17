@@ -44,12 +44,11 @@ namespace paywall.DemoWeb
         private static void EnsureDataStorageIsReady(IServiceProvider scopedServices)
         {
             CoreEFStartup.InitializeDatabaseAsync(scopedServices).Wait();
-            
             SimpleContentEFStartup.InitializeDatabaseAsync(scopedServices).Wait();
-
-
-
             LoggingEFStartup.InitializeDatabaseAsync(scopedServices).Wait();
+            EmailQueueDatabase.InitializeDatabaseAsync(scopedServices).Wait();
+            EmailTemplateDatabase.InitializeDatabaseAsync(scopedServices).Wait();
+            MembershipDatabase.InitializeDatabaseAsync(scopedServices).Wait();
         }
 
         private static void ConfigureLogging(

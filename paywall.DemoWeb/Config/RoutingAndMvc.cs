@@ -99,15 +99,6 @@ namespace Microsoft.AspNetCore.Builder
             services.AddMvc()
                 .AddRazorOptions(options =>
                 {
-                    options.AddCloudscribeViewLocationFormats();
-                    options.AddCloudscribeCommonEmbeddedViews();
-                    options.AddCloudscribeNavigationBootstrap4Views();
-                    options.AddCloudscribeCoreBootstrap4Views();
-                    options.AddCloudscribeCoreSimpleContentIntegrationBootstrap4Views();
-                    options.AddCloudscribeSimpleContentBootstrap4Views();
-                    options.AddCloudscribeFileManagerBootstrap4Views();
-                    options.AddCloudscribeLoggingBootstrap4Views();
-
                     options.ViewLocationExpanders.Add(new cloudscribe.Core.Web.Components.SiteViewLocationExpander());
                 });
 

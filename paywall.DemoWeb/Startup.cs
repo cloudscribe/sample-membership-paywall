@@ -1,9 +1,11 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using Hangfire;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using paywall.DemoWeb.Config;
 using System;
 
 
@@ -22,12 +24,16 @@ namespace paywall.DemoWeb
             _log = logger;
 
             _sslIsAvailable = _configuration.GetValue<bool>("AppSettings:UseSsl");
+            _enableHangfireService = _configuration.GetValue<bool>("AppSettings:EnableHangfireService");
+            _enableHangfireDashboard = _configuration.GetValue<bool>("AppSettings:EnableHangfireDashboard");
         }
 
-        private IConfiguration _configuration { get; set; }
-        private IHostingEnvironment _environment { get; set; }
-        private bool _sslIsAvailable { get; set; }
-        private ILogger _log;
+        private readonly IConfiguration _configuration;
+        private readonly IHostingEnvironment _environment;
+        private readonly ILogger _log;
+        private readonly bool _sslIsAvailable;
+        private readonly bool _enableHangfireService = true;
+        private readonly bool _enableHangfireDashboard = true;
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
@@ -68,6 +74,7 @@ namespace paywall.DemoWeb
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(
+            IServiceProvider serviceProvider,
             IApplicationBuilder app, 
             IHostingEnvironment env,
             ILoggerFactory loggerFactory,
@@ -78,7 +85,6 @@ namespace paywall.DemoWeb
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                app.UseBrowserLink();
                 app.UseDatabaseErrorPage();
             }
             else
@@ -99,6 +105,38 @@ namespace paywall.DemoWeb
                     loggerFactory,
                     multiTenantOptions,
                     _sslIsAvailable);
+
+            if (_enableHangfireDashboard)
+            {
+                app.UseHangfireDashboard("/tasks", new DashboardOptions
+                {
+                    Authorization = new[] { new HangFireAuthorizationFilter() }
+                });
+            }
+
+            if (_enableHangfireService)
+            {
+                var options = new BackgroundJobServerOptions
+                {
+                    // This is the default value
+                    //WorkerCount = Environment.ProcessorCount * 5
+                    WorkerCount = 5
+                };
+                app.UseHangfireServer(options);
+
+                GlobalConfiguration.Configuration.UseActivator(new cloudscribe.EmailQueue.HangfireIntegration.HangfireActivator(serviceProvider));
+
+                RecurringJob.RemoveIfExists("email-processor");
+                RecurringJob.AddOrUpdate<cloudscribe.EmailQueue.Models.IEmailQueueProcessor>("email-processor", mp => mp.StartProcessing(), Cron.MinuteInterval(10));
+
+                RecurringJob.RemoveIfExists("expired-membership-processor");
+                RecurringJob.AddOrUpdate<cloudscribe.Membership.Models.IRoleRemovalTask>("expired-membership-processor", x => x.RemoveExpiredMembersFromGrantedRoles(), Cron.Daily(23));
+
+                RecurringJob.RemoveIfExists("membership-reminder-email-processor");
+                RecurringJob.AddOrUpdate<cloudscribe.Membership.Models.ISendRemindersTask>("membership-reminder-email-processor", x => x.SendRenewalReminders(), Cron.Daily(7));
+
+
+            }
 
 
             app.UseMvc(routes =>
