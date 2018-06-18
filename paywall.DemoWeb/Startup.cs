@@ -127,13 +127,19 @@ namespace paywall.DemoWeb
                 GlobalConfiguration.Configuration.UseActivator(new cloudscribe.EmailQueue.HangfireIntegration.HangfireActivator(serviceProvider));
 
                 RecurringJob.RemoveIfExists("email-processor");
-                RecurringJob.AddOrUpdate<cloudscribe.EmailQueue.Models.IEmailQueueProcessor>("email-processor", mp => mp.StartProcessing(), Cron.MinuteInterval(10));
+                RecurringJob.AddOrUpdate<cloudscribe.EmailQueue.Models.IEmailQueueProcessor>("email-processor", 
+                    mp => mp.StartProcessing(), 
+                    Cron.MinuteInterval(10)); //every 10 minutes
 
                 RecurringJob.RemoveIfExists("expired-membership-processor");
-                RecurringJob.AddOrUpdate<cloudscribe.Membership.Models.IRoleRemovalTask>("expired-membership-processor", x => x.RemoveExpiredMembersFromGrantedRoles(), Cron.Daily(23));
+                RecurringJob.AddOrUpdate<cloudscribe.Membership.Models.IRoleRemovalTask>("expired-membership-processor", 
+                    x => x.RemoveExpiredMembersFromGrantedRoles(), 
+                    Cron.Daily(23)); //11pm
 
                 RecurringJob.RemoveIfExists("membership-reminder-email-processor");
-                RecurringJob.AddOrUpdate<cloudscribe.Membership.Models.ISendRemindersTask>("membership-reminder-email-processor", x => x.SendRenewalReminders(), Cron.Daily(7));
+                RecurringJob.AddOrUpdate<cloudscribe.Membership.Models.ISendRemindersTask>("membership-reminder-email-processor", 
+                    x => x.SendRenewalReminders(), 
+                    Cron.Daily(7)); //7am
 
 
             }

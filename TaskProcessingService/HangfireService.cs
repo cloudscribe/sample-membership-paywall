@@ -51,24 +51,33 @@ namespace TaskProcessingService
                 var emailQueueProcessorMinuteInterval = _config.GetValue<int>("AppSettings:EmailQueueProcessorMinuteInterval");
                 RecurringJob.AddOrUpdate<cloudscribe.EmailQueue.Models.IEmailQueueProcessor>("email-processor", 
                     mp => mp.StartProcessing(),
+#if DEBUG
                     Cron.MinuteInterval(1)
-                    //Cron.MinuteInterval(emailQueueProcessorMinuteInterval)
+#else
+                    Cron.MinuteInterval(emailQueueProcessorMinuteInterval)
+#endif
                     );
 
                 RecurringJob.RemoveIfExists("expired-membership-processor");
                 var removeExpiredMembersFromGrantedRolesHourOfDayToRun = _config.GetValue<int>("AppSettings:RemoveExpiredMembersFromGrantedRolesHourOfDayToRun");
                 RecurringJob.AddOrUpdate<cloudscribe.Membership.Models.IRoleRemovalTask>("expired-membership-processor", 
                     x => x.RemoveExpiredMembersFromGrantedRoles(),
-                    Cron.MinuteInterval(4)
-                    //Cron.Daily(removeExpiredMembersFromGrantedRolesHourOfDayToRun)
+#if DEBUG
+                    Cron.MinuteInterval(3)
+#else
+                    Cron.Daily(removeExpiredMembersFromGrantedRolesHourOfDayToRun)
+#endif             
                     );
 
                 RecurringJob.RemoveIfExists("membership-reminder-email-processor");
                 var sendRenewalRemindersHourOfDayToRun = _config.GetValue<int>("AppSettings:SendRenewalRemindersHourOfDayToRun");
                 RecurringJob.AddOrUpdate<cloudscribe.Membership.Models.ISendRemindersTask>("membership-reminder-email-processor", 
                     x => x.SendRenewalReminders(),
-                    Cron.MinuteInterval(5)
-                    //Cron.Daily(sendRenewalRemindersHourOfDayToRun)
+#if DEBUG
+                    Cron.MinuteInterval(2)
+#else
+                    Cron.Daily(sendRenewalRemindersHourOfDayToRun)
+#endif
                     );
 
                 return true;

@@ -57,8 +57,14 @@
     <Reference Include="cloudscribe.Core.Models, Version=3.0.2.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\cloudscribe.Core.Models.3.0.2\lib\netstandard2.0\cloudscribe.Core.Models.dll</HintPath>
     </Reference>
-    <Reference Include="cloudscribe.Core.Web, Version=3.0.3.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\cloudscribe.Core.Web.3.0.3\lib\netstandard2.0\cloudscribe.Core.Web.dll</HintPath>
+    <Reference Include="cloudscribe.Core.Storage.EFCore.Common, Version=3.0.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\cloudscribe.Core.Storage.EFCore.Common.3.0.1\lib\netstandard2.0\cloudscribe.Core.Storage.EFCore.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="cloudscribe.Core.Storage.EFCore.MSSQL, Version=3.0.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\cloudscribe.Core.Storage.EFCore.MSSQL.3.0.1\lib\netstandard2.0\cloudscribe.Core.Storage.EFCore.MSSQL.dll</HintPath>
+    </Reference>
+    <Reference Include="cloudscribe.Core.Web, Version=3.0.4.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\cloudscribe.Core.Web.3.0.4\lib\netstandard2.0\cloudscribe.Core.Web.dll</HintPath>
     </Reference>
     <Reference Include="cloudscribe.DbHelpers.Ado, Version=2.0.4.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\cloudscribe.DbHelpers.Ado.2.0.4\lib\netstandard2.0\cloudscribe.DbHelpers.Ado.dll</HintPath>
@@ -66,26 +72,26 @@
     <Reference Include="cloudscribe.Email.Senders, Version=1.0.4.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\cloudscribe.Email.Senders.1.0.4\lib\netstandard2.0\cloudscribe.Email.Senders.dll</HintPath>
     </Reference>
-    <Reference Include="cloudscribe.Email.Templating.Data.EFCore.Common, Version=2.1.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\cloudscribe.Email.Templating.Data.EFCore.Common.2.1.0\lib\netstandard2.0\cloudscribe.Email.Templating.Data.EFCore.Common.dll</HintPath>
+    <Reference Include="cloudscribe.Email.Templating.Data.EFCore.Common, Version=2.1.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\cloudscribe.Email.Templating.Data.EFCore.Common.2.1.1\lib\netstandard2.0\cloudscribe.Email.Templating.Data.EFCore.Common.dll</HintPath>
     </Reference>
-    <Reference Include="cloudscribe.Email.Templating.Data.EFCore.MSSQL, Version=2.1.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\cloudscribe.Email.Templating.Data.EFCore.MSSQL.2.1.0\lib\netstandard2.0\cloudscribe.Email.Templating.Data.EFCore.MSSQL.dll</HintPath>
+    <Reference Include="cloudscribe.Email.Templating.Data.EFCore.MSSQL, Version=2.1.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\cloudscribe.Email.Templating.Data.EFCore.MSSQL.2.1.1\lib\netstandard2.0\cloudscribe.Email.Templating.Data.EFCore.MSSQL.dll</HintPath>
     </Reference>
-    <Reference Include="cloudscribe.Email.Templating.Models, Version=2.1.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\cloudscribe.Email.Templating.Models.2.1.0\lib\netstandard2.0\cloudscribe.Email.Templating.Models.dll</HintPath>
+    <Reference Include="cloudscribe.Email.Templating.Models, Version=2.1.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\cloudscribe.Email.Templating.Models.2.1.1\lib\netstandard2.0\cloudscribe.Email.Templating.Models.dll</HintPath>
     </Reference>
-    <Reference Include="cloudscribe.Email.Templating.Services, Version=2.1.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\cloudscribe.Email.Templating.Services.2.1.0\lib\netstandard2.0\cloudscribe.Email.Templating.Services.dll</HintPath>
+    <Reference Include="cloudscribe.Email.Templating.Services, Version=2.1.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\cloudscribe.Email.Templating.Services.2.1.1\lib\netstandard2.0\cloudscribe.Email.Templating.Services.dll</HintPath>
     </Reference>
-    <Reference Include="cloudscribe.Email.Templating.Web, Version=2.1.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\cloudscribe.Email.Templating.Web.2.1.0\lib\netstandard2.0\cloudscribe.Email.Templating.Web.dll</HintPath>
+    <Reference Include="cloudscribe.Email.Templating.Web, Version=2.1.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\cloudscribe.Email.Templating.Web.2.1.1\lib\netstandard2.0\cloudscribe.Email.Templating.Web.dll</HintPath>
     </Reference>
-    <Reference Include="cloudscribe.Email.Templating.Web.Views, Version=2.1.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\cloudscribe.Email.Templating.Web.2.1.0\lib\netstandard2.0\cloudscribe.Email.Templating.Web.Views.dll</HintPath>
+    <Reference Include="cloudscribe.Email.Templating.Web.Views, Version=2.1.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\cloudscribe.Email.Templating.Web.2.1.1\lib\netstandard2.0\cloudscribe.Email.Templating.Web.Views.dll</HintPath>
     </Reference>
-    <Reference Include="cloudscribe.EmailQueue.CoreIntegration, Version=1.0.1.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\cloudscribe.EmailQueue.CoreIntegration.1.0.1\lib\netstandard2.0\cloudscribe.EmailQueue.CoreIntegration.dll</HintPath>
+    <Reference Include="cloudscribe.EmailQueue.CoreIntegration, Version=2.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\cloudscribe.EmailQueue.CoreIntegration.2.1.0\lib\netstandard2.0\cloudscribe.EmailQueue.CoreIntegration.dll</HintPath>
     </Reference>
     <Reference Include="cloudscribe.EmailQueue.Data.EFCore.Common, Version=2.1.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\cloudscribe.EmailQueue.Data.EFCore.Common.2.1.0\lib\netstandard2.0\cloudscribe.EmailQueue.Data.EFCore.Common.dll</HintPath>
@@ -117,8 +123,8 @@
     <Reference Include="cloudscribe.Membership.Data.EFCore.Common, Version=2.1.1.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\cloudscribe.Membership.Data.EFCore.Common.2.1.1\lib\netstandard2.0\cloudscribe.Membership.Data.EFCore.Common.dll</HintPath>
     </Reference>
-    <Reference Include="cloudscribe.Membership.Data.EFCore.MSSQL, Version=2.1.1.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\cloudscribe.Membership.Data.EFCore.MSSQL.2.1.1\lib\netstandard2.0\cloudscribe.Membership.Data.EFCore.MSSQL.dll</HintPath>
+    <Reference Include="cloudscribe.Membership.Data.EFCore.MSSQL, Version=2.1.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\cloudscribe.Membership.Data.EFCore.MSSQL.2.1.2\lib\netstandard2.0\cloudscribe.Membership.Data.EFCore.MSSQL.dll</HintPath>
     </Reference>
     <Reference Include="cloudscribe.Membership.HangfireIntegration, Version=2.1.1.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\cloudscribe.Membership.HangfireIntegration.2.1.1\lib\netstandard2.0\cloudscribe.Membership.HangfireIntegration.dll</HintPath>
@@ -126,8 +132,8 @@
     <Reference Include="cloudscribe.Membership.Models, Version=2.1.1.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\cloudscribe.Membership.Models.2.1.1\lib\netstandard2.0\cloudscribe.Membership.Models.dll</HintPath>
     </Reference>
-    <Reference Include="cloudscribe.Membership.Web.Mvc, Version=2.1.1.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\cloudscribe.Membership.Web.Mvc.2.1.1\lib\netstandard2.0\cloudscribe.Membership.Web.Mvc.dll</HintPath>
+    <Reference Include="cloudscribe.Membership.Web.Mvc, Version=2.1.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\cloudscribe.Membership.Web.Mvc.2.1.3\lib\netstandard2.0\cloudscribe.Membership.Web.Mvc.dll</HintPath>
     </Reference>
     <Reference Include="cloudscribe.Pagination.Models, Version=1.0.2.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\cloudscribe.Pagination.Models.1.0.2\lib\netstandard1.6\cloudscribe.Pagination.Models.dll</HintPath>
