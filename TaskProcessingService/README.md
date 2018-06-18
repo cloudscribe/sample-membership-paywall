@@ -23,9 +23,9 @@ See the settings in appsettings.json you need to configure:
 * Email Settings using either SMTP, SendGrid, Mailgun, or Elastic Email
 * other option settings seen there
 
-For testing in a development environment you should copy the appsettings.json file as appsettings.Development.json. This file is only used in debug mode and will override the main appsettings.json file. In our git repository we have tha file gitignored to prevent credentials from going into the repository.
+For testing in a development environment you should copy the appsettings.json file as appsettings.Development.json. This file is only used in debug mode and will override the main appsettings.json file. In our git repository we have that file gitignored to prevent credentials from going into the repository.
 
-For prodiuctions environments it is reomeended to copy the appsettings.json file as appsettings.Production.json
+For production environments it is reomeended to copy the appsettings.json file as appsettings.Production.json
 
 Note that Hangfire has a set of tables it will create, you can use the same database or a different one for the Hangfire data, this example code just uses the same database as the demo web app built with cloudscribe components.
 
