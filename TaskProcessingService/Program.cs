@@ -55,8 +55,8 @@ namespace TaskProcessingService
                 });
                 hostConfigurator.RunAsNetworkService();
 
-                hostConfigurator.SetServiceName("Task Processing Service - cloudscribe");
-                hostConfigurator.SetDescription("Process tasks for cloudscribe web apps, such as email queue, membership reminders, and other tasks.");
+                hostConfigurator.SetServiceName(config["AppSettings:ServiceName"]);
+                hostConfigurator.SetDescription(config["AppSettings:ServiceDescription"]);
 
             });
 

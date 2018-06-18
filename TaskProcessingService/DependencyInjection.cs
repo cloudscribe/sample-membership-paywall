@@ -10,6 +10,7 @@ using cloudscribe.EmailQueue.Models;
 using cloudscribe.EmailQueue.Services;
 using cloudscribe.Membership.HangfireIntegration;
 using cloudscribe.Membership.Models;
+using cloudscribe.Membership.Services;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -70,6 +71,7 @@ namespace TaskProcessingService
             services.AddMembershipSubscriptionStorageMSSQL(connectionString);
             services.AddScoped<IRoleRemovalTask, HangfireRoleRemovalTask>();
             services.AddScoped<ISendRemindersTask, HangfireSendRemindersTask>();
+            services.AddScoped<IEmailRecipientProvider, ReminderRecipientProvider>();
 
 
 
