@@ -5,7 +5,11 @@ This repository contains a reference web application to demonstate cloudscribe M
 [Hangfire](https://www.hangfire.io/) has 2 main components, the server and the dashboard. The server is what processes the tasks, and the dashboard is a web page for viewing the status and activity of the service. Both the service and the dashboard can be run from within the web application, but it is also posible to use the dahsboard in the web application while moving the task processing into a Windows Service. This repository also contains [a reference windows service implementation](/TaskProcessingService/README.md).
 
 cloudscribe Membership Paywall is a commercial add on feature for websites and applications built on [cloudscribe Core](https://github.com/cloudscribe/cloudscribe).
-It is free to try but has alerts indiciating it is a free trial and the alerts will be shown every few requests until a license file is installed.
+It is free to try but has alerts indiciating it is a free trial and the alerts will be shown every few requests until a license file is installed. If you are new to cloudscribe, please see the [Introduction](https://www.cloudscribe.com/docs/introduction).
+
+## Prerequisites
+
+Visual Studio 2017 with latest updates.
 
 ## Testing the Web App
 
