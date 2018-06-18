@@ -60,7 +60,7 @@ See also the [Topshelf command line reference](http://docs.topshelf-project.com/
 
 ## Some Developer Tips
 
-If you use this project as a sample to make your own tasks with a windows service, and you find that your tasks aren't working and if it doesn't hit breakpoints in your task code during debug, it usually means it failed to resolve some dependency needed by your task. Unfortunately you won't see any errors about that in the console window, it will just fail silently. So double check that you have registered all the needed dependencies for your tasks. Note that although this console app requires the full .NET Framework, you can write your tasks in netstandard class libraries and reference those from the console app. 
+If you use this project as a sample to make your own tasks with a windows service, and you find that your tasks aren't working and if it doesn't hit breakpoints in your task code during debug, it usually means it failed to resolve some dependency needed by your task. Unfortunately you won't see any errors about that in the console window, it will just fail silently. So double check that you have registered all the needed dependencies for your tasks. Note that although this console app requires the full .NET Framework, you can write your tasks in netstandard class libraries and reference those from the console app. Another thing I've noticied is for example some dependency is missing and you try to run the task 5 times and it fails silently each time, then you fix the dependency, it seems that Hangfire remembers the failed attempts and runs your tasks 5 times to complete the previous 5 times when it failed.
 
 ## Have Questions or Feedback?
 
