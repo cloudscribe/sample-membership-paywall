@@ -52,7 +52,7 @@ I think it is a good idea to verify that the service can write to the Windows Ap
 
 See also the [Topshelf command line reference](http://docs.topshelf-project.com/en/latest/overview/commandline.html)
 
-## Have Questions?
+## Have Questions or Feedback?
 
 Visit our gitter chat web page:
 [![Join the chat at https://gitter.im/joeaudette/cloudscribe](https://badges.gitter.im/joeaudette/cloudscribe.svg)](https://gitter.im/joeaudette/cloudscribe?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
