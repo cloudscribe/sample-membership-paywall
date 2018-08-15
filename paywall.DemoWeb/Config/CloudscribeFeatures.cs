@@ -26,6 +26,8 @@ namespace Microsoft.Extensions.DependencyInjection
             services.AddMembershipSubscriptionStorageMSSQL(connectionString);
             services.AddHangfire(hfConfig => hfConfig.UseSqlServerStorage(connectionString));
 
+            services.AddStripeIntegrationStorageMSSQL(connectionString);
+
             return services;
         }
 
@@ -45,6 +47,10 @@ namespace Microsoft.Extensions.DependencyInjection
             services.AddSimpleContentMvc(config);
             services.AddMetaWeblogForSimpleContent(config.GetSection("MetaWeblogApiOptions"));
             services.AddSimpleContentRssSyndiction();
+
+            services.AddMembershipSStripeIntegration(config);
+            services.AddCloudscribeCoreStripeIntegration();
+            services.AddStripeIntegrationMvc(config);
 
             services.AddScoped<IRoleRemovalTask, HangfireRoleRemovalTask>();
             services.AddScoped<ISendRemindersTask, HangfireSendRemindersTask>();

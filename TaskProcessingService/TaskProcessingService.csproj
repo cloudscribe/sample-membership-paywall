@@ -51,17 +51,17 @@
     <Reference Include="cloudscribe.Commerce.Models, Version=1.0.1.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\cloudscribe.Commerce.Models.1.0.1\lib\netstandard2.0\cloudscribe.Commerce.Models.dll</HintPath>
     </Reference>
-    <Reference Include="cloudscribe.Core.Identity, Version=3.0.1.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\cloudscribe.Core.Identity.3.0.1\lib\netstandard2.0\cloudscribe.Core.Identity.dll</HintPath>
+    <Reference Include="cloudscribe.Core.Identity, Version=3.0.4.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\cloudscribe.Core.Identity.3.0.4\lib\netstandard2.0\cloudscribe.Core.Identity.dll</HintPath>
     </Reference>
-    <Reference Include="cloudscribe.Core.Models, Version=3.0.2.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\cloudscribe.Core.Models.3.0.2\lib\netstandard2.0\cloudscribe.Core.Models.dll</HintPath>
+    <Reference Include="cloudscribe.Core.Models, Version=3.0.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\cloudscribe.Core.Models.3.0.3\lib\netstandard2.0\cloudscribe.Core.Models.dll</HintPath>
     </Reference>
-    <Reference Include="cloudscribe.Core.Storage.EFCore.Common, Version=3.0.1.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\cloudscribe.Core.Storage.EFCore.Common.3.0.1\lib\netstandard2.0\cloudscribe.Core.Storage.EFCore.Common.dll</HintPath>
+    <Reference Include="cloudscribe.Core.Storage.EFCore.Common, Version=3.0.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\cloudscribe.Core.Storage.EFCore.Common.3.0.2\lib\netstandard2.0\cloudscribe.Core.Storage.EFCore.Common.dll</HintPath>
     </Reference>
-    <Reference Include="cloudscribe.Core.Storage.EFCore.MSSQL, Version=3.0.1.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\cloudscribe.Core.Storage.EFCore.MSSQL.3.0.1\lib\netstandard2.0\cloudscribe.Core.Storage.EFCore.MSSQL.dll</HintPath>
+    <Reference Include="cloudscribe.Core.Storage.EFCore.MSSQL, Version=3.0.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\cloudscribe.Core.Storage.EFCore.MSSQL.3.0.2\lib\netstandard2.0\cloudscribe.Core.Storage.EFCore.MSSQL.dll</HintPath>
     </Reference>
     <Reference Include="cloudscribe.Core.Web, Version=3.0.4.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\cloudscribe.Core.Web.3.0.4\lib\netstandard2.0\cloudscribe.Core.Web.dll</HintPath>
@@ -135,8 +135,8 @@
     <Reference Include="cloudscribe.Membership.Web.Mvc, Version=2.1.4.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\cloudscribe.Membership.Web.Mvc.2.1.4\lib\netstandard2.0\cloudscribe.Membership.Web.Mvc.dll</HintPath>
     </Reference>
-    <Reference Include="cloudscribe.Pagination.Models, Version=1.0.2.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\cloudscribe.Pagination.Models.1.0.2\lib\netstandard1.6\cloudscribe.Pagination.Models.dll</HintPath>
+    <Reference Include="cloudscribe.Pagination.Models, Version=1.0.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\cloudscribe.Pagination.Models.1.0.3\lib\netstandard1.6\cloudscribe.Pagination.Models.dll</HintPath>
     </Reference>
     <Reference Include="cloudscribe.Web.Common, Version=3.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\cloudscribe.Web.Common.3.0.0\lib\netstandard2.0\cloudscribe.Web.Common.dll</HintPath>

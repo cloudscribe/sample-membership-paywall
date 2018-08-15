@@ -5,6 +5,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace paywall.DemoWeb
 {
@@ -31,7 +32,8 @@ namespace paywall.DemoWeb
 
             var env = host.Services.GetRequiredService<IHostingEnvironment>();
             var loggerFactory = host.Services.GetRequiredService<ILoggerFactory>();
-            ConfigureLogging(env, loggerFactory, host.Services);
+            var config = host.Services.GetRequiredService<IConfiguration>();
+            ConfigureLogging(env, loggerFactory, host.Services, config);
 
             host.Run();
         }
@@ -49,46 +51,67 @@ namespace paywall.DemoWeb
             EmailQueueDatabase.InitializeDatabaseAsync(scopedServices).Wait();
             EmailTemplateDatabase.InitializeDatabaseAsync(scopedServices).Wait();
             MembershipDatabase.InitializeDatabaseAsync(scopedServices).Wait();
+
+            StripeDatabase.InitializeDatabaseAsync(scopedServices).Wait();
         }
 
         private static void ConfigureLogging(
             IHostingEnvironment env,
             ILoggerFactory loggerFactory,
-            IServiceProvider serviceProvider
+            IServiceProvider serviceProvider,
+            IConfiguration config
             )
         {
+            var dbLoggerConfig = config.GetSection("DbLoggerConfig").Get<cloudscribe.Logging.Models.DbLoggerConfig>();
             LogLevel minimumLevel;
+            string levelConfig;
             if (env.IsProduction())
             {
-                minimumLevel = LogLevel.Warning;
+                levelConfig = dbLoggerConfig.ProductionLogLevel;
             }
             else
             {
-                minimumLevel = LogLevel.Information;
+                levelConfig = dbLoggerConfig.DevLogLevel;
+            }
+            switch (levelConfig)
+            {
+                case "Debug":
+                    minimumLevel = LogLevel.Debug;
+                    break;
+
+                case "Information":
+                    minimumLevel = LogLevel.Information;
+                    break;
+
+                case "Trace":
+                    minimumLevel = LogLevel.Trace;
+                    break;
+
+                default:
+                    minimumLevel = LogLevel.Warning;
+                    break;
             }
 
             // a customizable filter for logging
-            // add exclusions to remove noise in the logs
-            var excludedLoggers = new List<string>
+            // add exclusions in appsettings.json to remove noise in the logs
+            bool logFilter(string loggerName, LogLevel logLevel)
             {
-                "Microsoft.AspNetCore.StaticFiles.StaticFileMiddleware",
-                "Microsoft.AspNetCore.Hosting.Internal.WebHost",
-            };
+                if (dbLoggerConfig.ExcludedNamesSpaces.Any(f => loggerName.StartsWith(f)))
+                {
+                    return false;
+                }
 
-            Func<string, LogLevel, bool> logFilter = (string loggerName, LogLevel logLevel) =>
-            {
                 if (logLevel < minimumLevel)
                 {
                     return false;
                 }
 
-                if (excludedLoggers.Contains(loggerName))
+                if (dbLoggerConfig.BelowWarningExcludedNamesSpaces.Any(f => loggerName.StartsWith(f)) && logLevel < LogLevel.Warning)
                 {
                     return false;
                 }
-
                 return true;
-            };
+            }
 
             loggerFactory.AddDbLogger(serviceProvider, logFilter);
         }
