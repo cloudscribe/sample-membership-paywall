@@ -94,6 +94,7 @@ namespace paywall.DemoWeb
 
             app.UseForwardedHeaders();
             app.UseStaticFiles();
+            app.UseCloudscribeCommonStaticFiles();
 
             //app.UseSession();
 

@@ -57,6 +57,13 @@ namespace Microsoft.Extensions.DependencyInjection
                     authBuilder.RequireAuthenticatedUser();
                 });
 
+            options.AddPolicy(
+                "StripeAdminPolicy",
+                authBuilder =>
+                {
+                    authBuilder.RequireRole("Administrators");
+                });
+
 
             // add other policies here 
 

@@ -7,6 +7,10 @@ This repository contains a reference web application to demonstate cloudscribe M
 cloudscribe Membership Paywall is a commercial add on feature for websites and applications built on [cloudscribe Core](https://github.com/cloudscribe/cloudscribe).
 It is free to try but has alerts indiciating it is a free trial and the alerts will be shown every few requests until a license file is installed. If you are new to cloudscribe, please see the [Introduction](https://www.cloudscribe.com/docs/introduction).
 
+cloudscribe Membership Paywall uses [Stripe](https://stripe.com) for online payments with full support for recurring subscriptions so users can be charged automatically and membership renewal can happen automatically. Users can of course opt out of automatic renewal at any time. Stripe has zero setup costs, and no monthly fees, it only has reasonable per transaction fees. 
+
+Note that cloudscribe StripeIntegration is an independent product purchased separately but is required for cloudscribe Membership inorder to process payments, and is included in this demo.
+
 ## Prerequisites
 
 Visual Studio 2017 with latest updates.
@@ -18,17 +22,23 @@ This sample uses Microsoft Sql Server. Other platforms including PostgreSql and 
 1. Copy the appsettings.json file in the paywall.DemoWeb project as appsettings.Development.json - this file is gitignored in our repository to prevent accidently putting credentials in the repository.
 2. Create a Sql Server database and set the connection string in appsettings.Development.json
 3. To test the membership email reminders you also need to configure something to send email, in the appsettings.Development.json file you will see empty settings for Smtp, SendGrid, Mailgun, and Elastic Email. You can use any one of those, the system will use the first one it finds that has suppplied credentials, it is best to only populate one of those options.
-4. Optionally if you wish to use Square for collecting payments online, you need to populate these settings in appsettings.Development.json using sandbox credentials for testing:
+4. Optionally if you wish to use Stripe for collecting payments online, you need to populate these settings in appsettings.Development.json using sandbox credentials for testing:
 
-        `"SquareSettings": {
-            "UseProductionApi": false,
-            "ProductionApplicationId": "",
-            "ProductionAccessToken": "",
-            "ProductionLocationId": "",
-            "SandboxApplicationId": "",
-            "SandboxAccessToken": "",
-            "SandboxLocationId": ""
-          }`
+        `"StripeSettingsConfig": {
+           "Settings": [
+            {
+              "TenantId": "*",
+              "UseProductionApi": false,
+              "ProductionPublicKey": "",
+              "ProductionSecretKey": "",
+              "ProductionWebHookSecret": "",
+              "SandboxPublicKey": "",
+              "SandboxSecretKey": "",
+              "SandboxWebHookSecret": "",
+              "CurrencyCode": "USD"
+              }
+            ]
+          },`
 5. Rebuild the solution, this may take a few minutesd the first time, since it needs to restore packages.
 6. Right click the paywall.DemoWeb project node in Solution  Explorer and choose "View in browser".
 7. You can login with admin@admin.com and the password admin - after you login a new Administration link will appear in the menu, click that link to see the Administration Menu
@@ -46,8 +56,8 @@ This sample uses Microsoft Sql Server. Other platforms including PostgreSql and 
 13. Assuming all the steps above have been complted it is time to log out as administrator and register as a new user with a valid email address using the register link at the top of the page. After you register login as the new user.
 14. You should see an alert indicating you don't have an active membership, click the link in the alert.
 15. Click the Buy Now button next to the free trial and complete the form to get you membership.
-
-Note that it is also possible to create membership tickets under Administration > Membership Management > Order Entry
+16. Note that it is also possible to create membership tickets under Administration > Membership Management > Order Entry
+17. Note there is a separate section in the menu for Administration > Stripe Administration, which lets you see your stripe customers, subscriptions, charges etc using the Stripe API.
 
 ## Testing Reminders
 
@@ -56,6 +66,8 @@ Now that you have created a membership ticket to test with you can edit it to ad
 The reminders task is designed to only run once a day so that no user gets duplicate reminders. So after you really begin using the membership system you should not trigger any additional reminders to run, but for testing purposes, you can right click the menu item Administration > Tasks Dashboard and open it in a separate browser tab (this is the Hangfire Dashboard. Click the "Recurring Jobs" tab item. From there you can check the box next to a task name and then click the "Trigger Now" button to run the task.
 
 So for example if you have a reminder scheduled to run 1 day before expiration of membership, then edit a membership ticket so it expires tomorrow, then trigger the task "membership-reminder-email-processor". That task just queues the message in the email queue, so next you have to trigger the task "email-processor", or just wait a few minutes as this taks is scheduled to run every 3 minutes.
+
+Note also that reminders are NOT sent to users with automatic renewal enabled, only users who opt out of automatic renewals get reminders to renew their membership.
 
 ## Testing/Verifying that the granted role is removed when membershipp expires.
 
