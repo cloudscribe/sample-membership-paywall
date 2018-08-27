@@ -28,6 +28,8 @@ namespace Microsoft.Extensions.DependencyInjection
 
             services.AddStripeIntegrationStorageMSSQL(connectionString);
 
+            services.AddDynamicPolicyEFStorageMSSQL(connectionString);
+
             return services;
         }
 
@@ -62,6 +64,9 @@ namespace Microsoft.Extensions.DependencyInjection
             services.AddEmailQueueWithCloudscribeIntegration(config);
 
             services.AddEmailRazorTemplating(config);
+
+            services.AddCloudscribeDynamicPolicyIntegration(config);
+            services.AddDynamicAuthorizationMvc(config);
 
             return services;
         }
