@@ -51,6 +51,7 @@ namespace paywall.DemoWeb
             EmailQueueDatabase.InitializeDatabaseAsync(scopedServices).Wait();
             EmailTemplateDatabase.InitializeDatabaseAsync(scopedServices).Wait();
             MembershipDatabase.InitializeDatabaseAsync(scopedServices).Wait();
+            DynamicPolicyEFCore.InitializeDatabaseAsync(scopedServices).Wait();
 
             StripeDatabase.InitializeDatabaseAsync(scopedServices).Wait();
         }
