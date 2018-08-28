@@ -65,6 +65,18 @@ namespace paywall.DemoWeb
             // This is a custom extension method in Config/Localization.cs
             services.SetupLocalization();
 
+            services.Configure<CookiePolicyOptions>(options =>
+            {
+                options.CheckConsentNeeded = cloudscribe.Core.Identity.SiteCookieConsent.NeedsConsent;
+                options.MinimumSameSitePolicy = Microsoft.AspNetCore.Http.SameSiteMode.None;
+                options.ConsentCookie.Name = "cookieconsent_status";
+            });
+
+            services.Configure<Microsoft.AspNetCore.Mvc.CookieTempDataProviderOptions>(options =>
+            {
+                options.Cookie.IsEssential = true;
+            });
+
             //*** Important ***
             // This is a custom extension method in Config/RoutingAndMvc.cs
             services.SetupMvc(_sslIsAvailable);
@@ -91,10 +103,10 @@ namespace paywall.DemoWeb
             {
                 app.UseExceptionHandler("/oops/error");
             }
-
-            app.UseForwardedHeaders();
+            
             app.UseStaticFiles();
             app.UseCloudscribeCommonStaticFiles();
+            app.UseCookiePolicy();
 
             //app.UseSession();
 

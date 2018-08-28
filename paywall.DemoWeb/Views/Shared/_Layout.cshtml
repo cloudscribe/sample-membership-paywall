@@ -59,6 +59,7 @@
         <div class="row">
             <main id="content" role="main" class="col order-3">
                 @await Html.PartialAsync("AlertsPartial")
+                <partial name="_CookieConsentPartial" />
                 @RenderBody()
             </main>
             @if (sideNavVisible)
@@ -97,6 +98,7 @@
             </ul>
         </div>
         <div class="p-2 text-nowrap">Copyright &copy; @DateTime.Now.Year - @(Tenant?.SiteName ?? "Sample")</div>
+        <partial name="_CookieConsentRevokePartial" />
     </footer>
     @RenderSection("Toolbar", required: false)
     <environment names="Development">

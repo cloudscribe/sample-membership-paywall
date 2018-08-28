@@ -13,7 +13,8 @@ namespace Microsoft.Extensions.DependencyInjection
             // *** after login see Administrations > Authorization Policies
 
             //options.AddCloudscribeCoreDefaultPolicies();
-            //options.AddCloudscribeLoggingDefaultPolicy();
+
+            options.AddCloudscribeLoggingDefaultPolicy();
 
             //options.AddCloudscribeCoreSimpleContentIntegrationDefaultPolicies();
 
@@ -66,6 +67,14 @@ namespace Microsoft.Extensions.DependencyInjection
 
                 });
 
+            // probably best to not let anyone change the main admin policy from the UI
+            options.AddPolicy(
+                "AdminPolicy",
+                authBuilder =>
+                {
+                    authBuilder.RequireRole("ServerAdmins", "Administrators");
+                });
+
             // you could comment this out if you want admins from any site to be able
             // to edit globally shared country state data
             // by commenting this out the policy could be managed per tenant from the UI
@@ -85,6 +94,16 @@ namespace Microsoft.Extensions.DependencyInjection
                 {
                     authBuilder.RequireRole("Administrators");
                 });
+
+            // if you want the blog to be public then keep this policy here:
+            // if you want to protect the blog and require membership to view it, comment out this policy
+            // and manage it from the UI.
+            options.AddPolicy("BlogViewPolicy", policy =>
+                policy.RequireAssertion(context =>
+                {
+                    return true; //allow anonymous
+                })
+                );
 
 
             return options;
