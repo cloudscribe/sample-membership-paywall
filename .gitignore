@@ -330,3 +330,5 @@ ASALocalRun/
 .mfractor/
 paywall.DemoWeb/appsettings.Development.json
 paywall.DemoWeb/dp_keys/key-ea2d71f8-b9e0-4eba-9b8f-a001ab49520b.xml
+MembershipRoleRemoval.TaskConsole/appsettings.Development.json
+EmailQueueProcessor.TaskConsole/appsettings.Development.json
