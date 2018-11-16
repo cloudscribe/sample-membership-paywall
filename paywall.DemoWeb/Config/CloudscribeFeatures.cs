@@ -3,6 +3,8 @@ using cloudscribe.EmailQueue.Models;
 using cloudscribe.Membership.HangfireIntegration;
 using cloudscribe.Membership.Models;
 using Hangfire;
+using Hangfire.MySql;
+using Hangfire.PostgreSql;
 using Microsoft.Extensions.Configuration;
 
 namespace Microsoft.Extensions.DependencyInjection
@@ -11,25 +13,87 @@ namespace Microsoft.Extensions.DependencyInjection
     {
         public static IServiceCollection SetupDataStorage(
             this IServiceCollection services,
-            IConfiguration config
+            IConfiguration config,
+            bool useHangfire
             )
         {
-            var connectionString = config.GetConnectionString("EntityFrameworkConnection");
+            var dbPlatform = config["DataSettings:DbPlatform"];
+            switch (dbPlatform)
+            {
+                case "pgsql":
+                    var pgSqlConnectionString = config["DataSettings:PostgreSqlConnectionString"];
+                    if (useHangfire)
+                    {
+                        services.AddHangfire(hfConfig => hfConfig.UsePostgreSqlStorage(pgSqlConnectionString));
+                    }
 
-            services.AddCloudscribeCoreEFStorageMSSQL(connectionString);
-            services.AddCloudscribeLoggingEFStorageMSSQL(connectionString);
+                    services.AddCloudscribeLoggingPostgreSqlStorage(pgSqlConnectionString);
+                    services.AddCloudscribeCorePostgreSqlStorage(pgSqlConnectionString);
+                    services.AddCloudscribeSimpleContentPostgreSqlStorage(pgSqlConnectionString);
+                    services.AddMembershipSubscriptionPostgreSqlStorage(pgSqlConnectionString);
+                    services.AddStripeIntegrationPostgreSqlStorage(pgSqlConnectionString);
+                    services.AddEmailTemplatePostgreSqlStorage(pgSqlConnectionString);
+                    services.AddEmailQueuePostgreSqlStorage(pgSqlConnectionString);
+                    services.AddDynamicPolicyPostgreSqlStorage(pgSqlConnectionString);
+
+                    break;
+
+                case "mysql":
+                    var mySqlConnectionString = config["DataSettings:MySqlConnectionString"];
+                    if (useHangfire)
+                    {
+                        services.AddHangfire(hfConfig => { });
+
+                        GlobalConfiguration.Configuration.UseStorage(
+                            new MySqlStorage(
+                                mySqlConnectionString + "Allow User Variables=True",
+                                new MySqlStorageOptions
+                                {
+                                    //TransactionIsolationLevel = IsolationLevel.ReadCommitted,
+                                    //QueuePollInterval = TimeSpan.FromSeconds(15),
+                                    //JobExpirationCheckInterval = TimeSpan.FromHours(1),
+                                    //CountersAggregateInterval = TimeSpan.FromMinutes(5),
+                                    //PrepareSchemaIfNecessary = true,
+                                    //DashboardJobListLimit = 50000,
+                                    //TransactionTimeout = TimeSpan.FromMinutes(1),
+                                }));
+                    }
+
+                    services.AddCloudscribeLoggingEFStorageMySQL(mySqlConnectionString);
+                    services.AddCloudscribeCoreEFStorageMySql(mySqlConnectionString);
+                    services.AddCloudscribeSimpleContentEFStorageMySQL(mySqlConnectionString);
+                    services.AddMembershipSubscriptionStorageMySql(mySqlConnectionString);
+                    services.AddStripeIntegrationStorageMySql(mySqlConnectionString);
+                    services.AddEmailTemplateStorageMySql(mySqlConnectionString);
+                    services.AddEmailQueueStorageMySql(mySqlConnectionString);
+                    services.AddDynamicPolicyEFStorageMySql(mySqlConnectionString);
+
+                    break;
+
+                case "mssql":
+                default:
+
+                    var msSqlConnectionString = config["DataSettings:MsSqlConnectionString"];
+                    if(useHangfire)
+                    {
+                        services.AddHangfire(hfConfig => hfConfig.UseSqlServerStorage(msSqlConnectionString));
+                    }
+
+                    services.AddCloudscribeLoggingEFStorageMSSQL(msSqlConnectionString);
+                    services.AddCloudscribeCoreEFStorageMSSQL(msSqlConnectionString);
+                    services.AddCloudscribeSimpleContentEFStorageMSSQL(msSqlConnectionString);
+                    services.AddMembershipSubscriptionStorageMSSQL(msSqlConnectionString);
+                    services.AddStripeIntegrationStorageMSSQL(msSqlConnectionString);
+                    services.AddEmailTemplateStorageMSSQL(msSqlConnectionString);
+                    services.AddEmailQueueStorageMSSQL(msSqlConnectionString);
+                    services.AddDynamicPolicyEFStorageMSSQL(msSqlConnectionString);
+
+                    
+
+                    break;
+
+            }
             
-            services.AddCloudscribeSimpleContentEFStorageMSSQL(connectionString);
-
-            services.AddEmailTemplateStorageMSSQL(connectionString);
-            services.AddEmailQueueStorageMSSQL(connectionString);
-            services.AddMembershipSubscriptionStorageMSSQL(connectionString);
-            services.AddHangfire(hfConfig => hfConfig.UseSqlServerStorage(connectionString));
-
-            services.AddStripeIntegrationStorageMSSQL(connectionString);
-
-            services.AddDynamicPolicyEFStorageMSSQL(connectionString);
-
             return services;
         }
 

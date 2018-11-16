@@ -55,7 +55,8 @@ namespace paywall.DemoWeb
 
             //// **** IMPORTANT *****
             // This is a custom extension method in Config/CloudscribeFeatures.cs
-            services.SetupDataStorage(_configuration);
+            var useHangfire = _enableHangfireService || _enableHangfireDashboard;
+            services.SetupDataStorage(_configuration, useHangfire);
             
             //*** Important ***
             // This is a custom extension method in Config/CloudscribeFeatures.cs

@@ -1,8 +1,41 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFramework>netcoreapp2.1</TargetFramework>
   </PropertyGroup>
+
+  <ItemGroup Label="Package References">
+
+    <PackageReference Include="cloudscribe.Core.Storage.EFCore.MSSQL" Version="3.0.9" />
+    <PackageReference Include="cloudscribe.Core.Storage.EFCore.PostgreSql" Version="3.0.9" />
+    <PackageReference Include="cloudscribe.Core.Storage.EFCore.MySql" Version="3.0.9" />
+    
+    <PackageReference Include="cloudscribe.Membership.Web.Mvc" Version="2.1.11" />
+    <PackageReference Include="cloudscribe.Membership.Data.EFCore.MSSQL" Version="2.1.10" />
+    <PackageReference Include="cloudscribe.Membership.Data.EFCore.PostgreSql" Version="2.1.11" />
+    <PackageReference Include="cloudscribe.Membership.Data.EFCore.MySql" Version="2.1.10" />
+    <PackageReference Include="cloudscribe.Membership.StripeIntegration" Version="1.0.1" />
+    
+    <PackageReference Include="cloudscribe.StripeIntegration.Data.EFCore.MSSQL" Version="1.0.2" />
+    <PackageReference Include="cloudscribe.StripeIntegration.Data.EFCore.MySql" Version="1.0.2" />
+    <PackageReference Include="cloudscribe.StripeIntegration.Data.EFCore.PostgreSql" Version="1.0.2" />
+
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="2.1.1" />
+    <PackageReference Include="Microsoft.Extensions.Configuration" Version="2.1.1" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="2.1.1" />
+    <PackageReference Include="Microsoft.Extensions.Logging.EventLog" Version="2.1.1" />
+    <PackageReference Include="Microsoft.Extensions.Hosting" Version="2.1.1" />
+    
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="appsettings.Development.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="appsettings.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
 
 </Project>
