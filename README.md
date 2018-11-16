@@ -13,7 +13,7 @@ Note that cloudscribe StripeIntegration is an independent product purchased sepa
 
 ## Prerequisites
 
-Visual Studio 2017 with latest updates.
+DotNet Core SDK latest version and/or Visual Studio 2017 with the latest updates and ASP.NET Core Workload
 
 ## Testing the Web App
 
