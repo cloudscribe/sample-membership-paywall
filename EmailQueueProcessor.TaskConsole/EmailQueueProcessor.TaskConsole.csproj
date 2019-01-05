@@ -12,7 +12,7 @@
     <PackageReference Include="cloudscribe.EmailQueue.Data.EFCore.PostgreSql" Version="2.1.2" />
     <PackageReference Include="cloudscribe.EmailQueue.Services" Version="2.1.2" />
 
-    <PackageReference Include="cloudscribe.Membership.Web.Mvc" Version="2.1.11" />
+    <PackageReference Include="cloudscribe.Membership.Web.Mvc" Version="2.1.12" />
 
     <PackageReference Include="cloudscribe.Membership.Data.EFCore.MSSQL" Version="2.1.10" />
     <PackageReference Include="cloudscribe.Membership.Data.EFCore.MySql" Version="2.1.10" />
