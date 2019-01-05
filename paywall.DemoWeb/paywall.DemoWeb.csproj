@@ -31,16 +31,16 @@
     <PackageReference Include="Hangfire.PostgreSql" Version="1.5.0" />
     <PackageReference Include="Hangfire.MySqlStorage" Version="1.1.2-*" />
 
-    <PackageReference Include="cloudscribe.Core.Web" Version="3.1.28" />
-    <PackageReference Include="cloudscribe.Core.CompiledViews.Bootstrap4" Version="3.1.15" />
+    <PackageReference Include="cloudscribe.Core.Web" Version="3.1.40" />
+    <PackageReference Include="cloudscribe.Core.CompiledViews.Bootstrap4" Version="3.1.20" />
     <PackageReference Include="cloudscribe.Web.StaticFiles" Version="1.0.8" />
     
     <PackageReference Include="cloudscribe.Core.Storage.EFCore.MSSQL" Version="3.0.9" />
     <PackageReference Include="cloudscribe.Core.Storage.EFCore.PostgreSql" Version="3.0.9" />
     <PackageReference Include="cloudscribe.Core.Storage.EFCore.MySql" Version="3.0.9" />
     
-    <PackageReference Include="cloudscribe.Core.SimpleContent" Version="4.0.5" />
-    <PackageReference Include="cloudscribe.SimpleContent.Web" Version="4.0.14" />
+    <PackageReference Include="cloudscribe.Core.SimpleContent" Version="4.0.6" />
+    <PackageReference Include="cloudscribe.SimpleContent.Web" Version="4.0.17" />
     <PackageReference Include="cloudscribe.Core.SimpleContent.CompiledViews.Bootstrap4" Version="4.0.2" />
     <PackageReference Include="cloudscribe.SimpleContent.CompiledViews.Bootstrap4" Version="4.0.11" />
     <PackageReference Include="cloudscribe.SimpleContent.MetaWeblog" Version="4.0.8" />
@@ -50,21 +50,21 @@
     <PackageReference Include="cloudscribe.SimpleContent.Storage.EFCore.MySql" Version="4.0.6" />
 
     <PackageReference Include="cloudscribe.Logging.Web" Version="3.0.9" />
-    <PackageReference Include="cloudscribe.Logging.EFCore.MSSQL" Version="3.0.7" />
-    <PackageReference Include="cloudscribe.Logging.EFCore.MySql" Version="3.0.7" />
-    <PackageReference Include="cloudscribe.Logging.EFCore.PostgreSql" Version="3.0.9" />
+    <PackageReference Include="cloudscribe.Logging.EFCore.MSSQL" Version="3.0.8" />
+    <PackageReference Include="cloudscribe.Logging.EFCore.MySql" Version="3.0.8" />
+    <PackageReference Include="cloudscribe.Logging.EFCore.PostgreSql" Version="3.0.10" />
 
-    <PackageReference Include="cloudscribe.Membership.Web.Mvc" Version="2.1.11" />
-    <PackageReference Include="cloudscribe.Membership.Views.Bootstrap4" Version="2.1.8" />
+    <PackageReference Include="cloudscribe.Membership.Web.Mvc" Version="2.1.12" />
+    <PackageReference Include="cloudscribe.Membership.Views.Bootstrap4" Version="2.1.9" />
     <PackageReference Include="cloudscribe.Membership.Data.EFCore.MSSQL" Version="2.1.10" />
     <PackageReference Include="cloudscribe.Membership.Data.EFCore.MySql" Version="2.1.10" />
     <PackageReference Include="cloudscribe.Membership.Data.EFCore.PostgreSql" Version="2.1.11" />
     
     
     <PackageReference Include="cloudscribe.Membership.HangfireIntegration" Version="2.1.2" />
-    <PackageReference Include="cloudscribe.Membership.StripeIntegration" Version="1.0.1" />
-    <PackageReference Include="cloudscribe.Membership.StripeIntegration.Bootstrap4" Version="1.0.1" />
-    <PackageReference Include="cloudscribe.StripeIntegration.Mvc.Bootstrap4" Version="1.0.1" />
+    <PackageReference Include="cloudscribe.Membership.StripeIntegration" Version="1.0.2" />
+    <PackageReference Include="cloudscribe.Membership.StripeIntegration.Bootstrap4" Version="1.0.2" />
+    <PackageReference Include="cloudscribe.StripeIntegration.Mvc.Bootstrap4" Version="1.0.2" />
     <PackageReference Include="cloudscribe.StripeIntegration.Data.EFCore.MSSQL" Version="1.0.2" />
     <PackageReference Include="cloudscribe.StripeIntegration.Data.EFCore.MySql" Version="1.0.2" />
     <PackageReference Include="cloudscribe.StripeIntegration.Data.EFCore.PostgreSql" Version="1.0.2" />
