@@ -1,6 +1,6 @@
 # cloudscribe Membership Paywall Demo App
 
-This repository contains a reference web application to demonstate [cloudscribe Membership Paywall](https://www.cloudscribe.com/products/cloudscribe-membership-paywall). There are background tasks that are run from the web application using Hangfire. These background tasks handle sending renewal reminders for memberships that are expiring soon or have expired. There is also a background task to remove users from membership granted roles when the membership expires. 
+This repository contains a reference web application to demonstate [cloudscribe Membership Paywall](https://www.cloudscribe.com/products/cloudscribe-membership-paywall). There are background tasks that are run from the web application. These background tasks handle sending renewal reminders for memberships that are expiring soon or have expired. There is also a background task to remove users from membership granted roles when the membership expires. 
 
 
 cloudscribe Membership Paywall is a commercial add on feature for websites and applications built on [cloudscribe Core](https://github.com/cloudscribe/cloudscribe).
