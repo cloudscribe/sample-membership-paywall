@@ -2,7 +2,6 @@
 
 This repository contains a reference web application to demonstate [cloudscribe Membership Paywall](https://www.cloudscribe.com/products/cloudscribe-membership-paywall). There are background tasks that are run from the web application using Hangfire. These background tasks handle sending renewal reminders for memberships that are expiring soon or have expired. There is also a background task to remove users from membership granted roles when the membership expires. 
 
-[Hangfire](https://www.hangfire.io/) has 2 main components, the server and the dashboard. The server is what processes the tasks, and the dashboard is a web page for viewing the status and activity of the service. Both the service and the dashboard can be run from within the web application, but it is also posible to move the task processing into Scheduled Tasks using Windows Task Scheduler on Windows or Cron on Linux. This repository also contains [a console app that can be run as a scheduled task for sending email reminders](/EmailQueueProcessor.TaskConsole/README.md), and [a console app that can be run as a scheduled task to process role removals for expired memberships](/MembershipRoleRemoval.TaskConsole/README.md).
 
 cloudscribe Membership Paywall is a commercial add on feature for websites and applications built on [cloudscribe Core](https://github.com/cloudscribe/cloudscribe).
 It is free to try but has alerts indiciating it is a free trial and the alerts will be shown every few requests until a license file is installed. If you are new to cloudscribe, please see the [Introduction](https://www.cloudscribe.com/docs/introduction).
@@ -63,23 +62,31 @@ This sample uses Microsoft Sql Server. Other platforms including PostgreSql and 
 
 Now that you have created a membership ticket to test with you can edit it to adjust the end date to meet the requirments of a reminder. You can login as admin again and find the existing membership ticket under Administration > Membership Management > Order Search.
 
-The reminders task is designed to only run once a day so that no user gets duplicate reminders. So after you really begin using the membership system you should not trigger any additional reminders to run, but for testing purposes, you can right click the menu item Administration > Tasks Dashboard and open it in a separate browser tab (this is the Hangfire Dashboard. Click the "Recurring Jobs" tab item. From there you can check the box next to a task name and then click the "Trigger Now" button to run the task.
+The reminders task is designed to only run once a day so that no user gets duplicate reminders. The configuration can be seen in appsettings.json:
 
-So for example if you have a reminder scheduled to run 1 day before expiration of membership, then edit a membership ticket so it expires tomorrow, then trigger the task "membership-reminder-email-processor". That task just queues the message in the email queue, so next you have to trigger the task "email-processor", or just wait a few minutes as this taks is scheduled to run every 3 minutes.
+"SendRemindersBackgroundTaskOptions": {
+    "CronSchedule": "30 9 * * *",
+    "TaskSleepTimeInMilliseconds": 3000
+  },
+  "RoleRemovalBackgroundTaskOptions": {
+    "CronSchedule": "30 23 * * *",
+    "TaskSleepTimeInMilliseconds": 3000
+  },
+  
+The tasks above can be scheduled using cron format as seen here: https://github.com/atifaziz/NCrontab
+
+The email queue is processed every 3 minutes.
 
 Note also that reminders are NOT sent to users with automatic renewal enabled, only users who opt out of automatic renewals get reminders to renew their membership.
 
-## Testing/Verifying that the granted role is removed when membershipp expires.
+## Testing/Verifying that the granted role is removed when membership expires.
 
 Verify that a user for a given membership ticket is currently in the granted role under Administration > Role Management
 
 Edit the membership ticket end date to make it expired yesterday or any day not older than 30 days ago.
 
-Similar as triggering the email notification as mentioned above, trigger the "expired-membership-processor". That is the task that will look for expired tickets where the user has not renewed with a newer ticket and will remove the granted role from the user.
-
 You should be able to verify after the task has run that the user has been removed from the role.
 
-The "expired-membership-processor" task is scheduled to run once a day.
 
 ## Additional Guidance
 
