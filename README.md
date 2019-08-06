@@ -104,9 +104,6 @@ Note also that in settings you can define roles to not alert so that administrat
 
 The Reminder Templates generate html strings from the content entered and using a Razor View and layout. The razor files can be found under Views/Shared and can be customized. However if you make changes in the Razor files, then you need to save the templates again to generate the new template string, there is no way to automate that.
 
-## Have Questions or Feedback?
-
-Visit our gitter chat web page:
-[![Join the chat at https://gitter.im/joeaudette/cloudscribe](https://badges.gitter.im/joeaudette/cloudscribe.svg)](https://gitter.im/joeaudette/cloudscribe?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+If you have questions please visit our community forum https://www.cloudscribe.com/forum
 
 
