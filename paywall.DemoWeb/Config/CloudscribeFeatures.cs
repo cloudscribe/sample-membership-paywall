@@ -1,10 +1,5 @@
-﻿using cloudscribe.EmailQueue.HangfireIntegration;
-using cloudscribe.EmailQueue.Models;
-using cloudscribe.Membership.HangfireIntegration;
+﻿using cloudscribe.Membership.HangfireIntegration;
 using cloudscribe.Membership.Models;
-using Hangfire;
-using Hangfire.MySql;
-using Hangfire.PostgreSql;
 using Microsoft.Extensions.Configuration;
 
 namespace Microsoft.Extensions.DependencyInjection
@@ -13,8 +8,7 @@ namespace Microsoft.Extensions.DependencyInjection
     {
         public static IServiceCollection SetupDataStorage(
             this IServiceCollection services,
-            IConfiguration config,
-            bool useHangfire
+            IConfiguration config
             )
         {
             var dbPlatform = config["DataSettings:DbPlatform"];
@@ -22,11 +16,7 @@ namespace Microsoft.Extensions.DependencyInjection
             {
                 case "pgsql":
                     var pgSqlConnectionString = config["DataSettings:PostgreSqlConnectionString"];
-                    if (useHangfire)
-                    {
-                        services.AddHangfire(hfConfig => hfConfig.UsePostgreSqlStorage(pgSqlConnectionString));
-                    }
-
+                    
                     services.AddCloudscribeLoggingPostgreSqlStorage(pgSqlConnectionString);
                     services.AddCloudscribeCorePostgreSqlStorage(pgSqlConnectionString);
                     services.AddCloudscribeSimpleContentPostgreSqlStorage(pgSqlConnectionString);
@@ -40,24 +30,7 @@ namespace Microsoft.Extensions.DependencyInjection
 
                 case "mysql":
                     var mySqlConnectionString = config["DataSettings:MySqlConnectionString"];
-                    if (useHangfire)
-                    {
-                        services.AddHangfire(hfConfig => { });
-
-                        GlobalConfiguration.Configuration.UseStorage(
-                            new MySqlStorage(
-                                mySqlConnectionString + "Allow User Variables=True",
-                                new MySqlStorageOptions
-                                {
-                                    //TransactionIsolationLevel = IsolationLevel.ReadCommitted,
-                                    //QueuePollInterval = TimeSpan.FromSeconds(15),
-                                    //JobExpirationCheckInterval = TimeSpan.FromHours(1),
-                                    //CountersAggregateInterval = TimeSpan.FromMinutes(5),
-                                    //PrepareSchemaIfNecessary = true,
-                                    //DashboardJobListLimit = 50000,
-                                    //TransactionTimeout = TimeSpan.FromMinutes(1),
-                                }));
-                    }
+                    
 
                     services.AddCloudscribeLoggingEFStorageMySQL(mySqlConnectionString);
                     services.AddCloudscribeCoreEFStorageMySql(mySqlConnectionString);
@@ -74,10 +47,7 @@ namespace Microsoft.Extensions.DependencyInjection
                 default:
 
                     var msSqlConnectionString = config["DataSettings:MsSqlConnectionString"];
-                    if(useHangfire)
-                    {
-                        services.AddHangfire(hfConfig => hfConfig.UseSqlServerStorage(msSqlConnectionString));
-                    }
+                   
 
                     services.AddCloudscribeLoggingEFStorageMSSQL(msSqlConnectionString);
                     services.AddCloudscribeCoreEFStorageMSSQL(msSqlConnectionString);
@@ -121,10 +91,11 @@ namespace Microsoft.Extensions.DependencyInjection
             services.AddScoped<IRoleRemovalTask, HangfireRoleRemovalTask>();
             services.AddScoped<ISendRemindersTask, HangfireSendRemindersTask>();
             services.AddMembershipSubscriptionMvcComponents(config);
+            services.AddMembershipBackgroundTasks(config);
 
             // for testing the message formatting and token replacement
             //services.AddScoped<IEmailQueueItemSender, cloudscribe.EmailQueue.Services.LogOnlyMessageSender>();
-            services.AddScoped<IEmailQueueProcessor, HangFireEmailQueueProcessor>();
+            services.AddEmailQueueBackgroundTask(config);
             services.AddEmailQueueWithCloudscribeIntegration(config);
 
             services.AddEmailRazorTemplating(config);

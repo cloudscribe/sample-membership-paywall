@@ -1,11 +1,9 @@
-﻿using Hangfire;
-using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using paywall.DemoWeb.Config;
 using System;
 
 
@@ -24,16 +22,14 @@ namespace paywall.DemoWeb
             _log = logger;
 
             _sslIsAvailable = _configuration.GetValue<bool>("AppSettings:UseSsl");
-            _enableHangfireService = _configuration.GetValue<bool>("AppSettings:EnableHangfireService");
-            _enableHangfireDashboard = _configuration.GetValue<bool>("AppSettings:EnableHangfireDashboard");
+           
         }
 
         private readonly IConfiguration _configuration;
         private readonly IHostingEnvironment _environment;
         private readonly ILogger _log;
         private readonly bool _sslIsAvailable;
-        private readonly bool _enableHangfireService = true;
-        private readonly bool _enableHangfireDashboard = true;
+       
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
@@ -55,8 +51,7 @@ namespace paywall.DemoWeb
 
             //// **** IMPORTANT *****
             // This is a custom extension method in Config/CloudscribeFeatures.cs
-            var useHangfire = _enableHangfireService || _enableHangfireDashboard;
-            services.SetupDataStorage(_configuration, useHangfire);
+            services.SetupDataStorage(_configuration);
             
             //*** Important ***
             // This is a custom extension method in Config/CloudscribeFeatures.cs
@@ -108,57 +103,13 @@ namespace paywall.DemoWeb
             app.UseStaticFiles();
             app.UseCloudscribeCommonStaticFiles();
             app.UseCookiePolicy();
-
-            //app.UseSession();
-
+            
             app.UseRequestLocalization(localizationOptionsAccessor.Value);
 
             var multiTenantOptions = multiTenantOptionsAccessor.Value;
 
-            app.UseCloudscribeCore(
-                    loggerFactory,
-                    multiTenantOptions,
-                    _sslIsAvailable);
-
-            if (_enableHangfireDashboard)
-            {
-                app.UseHangfireDashboard("/tasks", new DashboardOptions
-                {
-                    Authorization = new[] { new HangFireAuthorizationFilter() }
-                });
-            }
-
-            if (_enableHangfireService)
-            {
-                var options = new BackgroundJobServerOptions
-                {
-                    // This is the default value
-                    //WorkerCount = Environment.ProcessorCount * 5
-                    WorkerCount = 5
-                };
-                app.UseHangfireServer(options);
-
-                GlobalConfiguration.Configuration.UseActivator(new cloudscribe.EmailQueue.HangfireIntegration.HangfireActivator(serviceProvider));
-
-                RecurringJob.RemoveIfExists("email-processor");
-                RecurringJob.AddOrUpdate<cloudscribe.EmailQueue.Models.IEmailQueueProcessor>("email-processor", 
-                    mp => mp.StartProcessing(), 
-                    Cron.MinuteInterval(10)); //every 10 minutes
-
-                RecurringJob.RemoveIfExists("expired-membership-processor");
-                RecurringJob.AddOrUpdate<cloudscribe.Membership.Models.IRoleRemovalTask>("expired-membership-processor", 
-                    x => x.RemoveExpiredMembersFromGrantedRoles(), 
-                    Cron.Daily(23)); //11pm
-
-                RecurringJob.RemoveIfExists("membership-reminder-email-processor");
-                RecurringJob.AddOrUpdate<cloudscribe.Membership.Models.ISendRemindersTask>("membership-reminder-email-processor", 
-                    x => x.SendRenewalReminders(), 
-                    Cron.Daily(7)); //7am
-
-
-            }
-
-
+            app.UseCloudscribeCore();
+            
             app.UseMvc(routes =>
             {
                 var useFolders = multiTenantOptions.Mode == cloudscribe.Core.Models.MultiTenantMode.FolderName;
